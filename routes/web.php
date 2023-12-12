@@ -7,8 +7,10 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::resource('todos', TodoController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::resource('todos', TodoController::class);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
